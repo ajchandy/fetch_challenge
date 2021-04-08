@@ -5,6 +5,22 @@ def set_intersection(c1, c2):
     return len(s1 & s2) / len(s1 | s2)
 
 
+def levenshtein(c1, c2):
+    s1, s2 = c1.split(), c2.split()
+    D = [[0 for j in range(len(s2)+1)] for i in range(len(s1)+1)] # creates a matrix with all 0's and also accounts for the empty string
+    for i in range(1, len(s1)+1): # initialization
+        D[i][0] = i
+    for j in range(1, len(s2)+1): # initialization
+        D[0][j] = j
+    for i in range(1, len(s1)+1):
+        for j in range(1, len(s2)+1):
+            if s1[i-1] == s2[j-1]:
+                D[i][j] = min(D[i-1][j]+1, D[i][j-1]+1, D[i-1][j-1])
+            else:
+                D[i][j] = min(D[i-1][j]+1, D[i][j-1]+1, D[i-1][j-1]+2)
+    return (len(s1) + len(s2) - D[-1][-1]) / (len(s1) + len(s2))
+
+
 def find_similarity(f1, f2, metric=set_intersection):
     """
     Finds similarity between two corpora using the metric passed.
@@ -42,4 +58,4 @@ if __name__=="__main__":
     except:
         print("!!! INVALID COMMAND LINE INPUTS !!!")
         exit()
-    print(find_similarity(f1, f2))
+    print(find_similarity(f1, f2, levenshtein))
