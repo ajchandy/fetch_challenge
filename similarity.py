@@ -1,5 +1,6 @@
 import sys
 
+
 def set_intersection(c1, c2):
     s1, s2 = set(c1.split()), set(c2.split())
     return len(s1 & s2) / len(s1 | s2)
@@ -21,14 +22,13 @@ def levenshtein(c1, c2):
     return (len(s1) + len(s2) - D[-1][-1]) / (len(s1) + len(s2))
 
 
-def find_similarity(f1, f2, metric=set_intersection):
+def find_similarity(f1, f2, metric=levenshtein):
     """
     Finds similarity between two corpora using the metric passed.
     f1: path to file 1
     f2: path to file 2
     metric: (default set_intersection) Similarity metric to be used
     """
-    #TODO: preprocessing (removing punctuations and stopwords)
 
     c1, c2 = "", ""
     try:
@@ -58,4 +58,9 @@ if __name__=="__main__":
     except:
         print("!!! INVALID COMMAND LINE INPUTS !!!")
         exit()
-    print(find_similarity(f1, f2, levenshtein))
+    try:
+        metric = ("set_intersection", "levenshtein")[int(input("Which metric do you want to use to compute the similarity? (defaults to levenshtein)\n1. Set Intersection\n2. Levenshtein\n")) - 1]
+    except:
+        print("!!! INVALID INPUT !!!\nDefaulting to Levenshtein")
+        metric = "levenshtein"
+    print(find_similarity(f1, f2, eval(metric)))
