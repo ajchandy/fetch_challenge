@@ -2,7 +2,9 @@
 Text similarity between two corpora.
 
 Steps to run
+
 The code is written in Python 3
+
 1. Clone the repo to your local machine ( must have python 3 installed and configured)
 2. Run the similarity.py script using an IDE or terminal
 3. The script takes in two inputs i.e the path to the documents
