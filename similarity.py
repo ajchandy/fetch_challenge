@@ -55,6 +55,10 @@ def find_similarity(f1, f2, metric=levenshtein):
 if __name__=="__main__":
     try:
         f1, f2 = sys.argv[1], sys.argv[2]
+
+    except IndexError:
+        f1, f2 = input('Enter path to file 1: '), input('Enter path to file 2: ')
+
     except:
         print("!!! INVALID COMMAND LINE INPUTS !!!")
         exit()
